@@ -1,7 +1,2 @@
-python3 -c "from langchain_groq import ChatGroq; print('groq ok')"
-python3 -c "from langchain_community.vectorstores import Chroma; print('chroma ok')"
-python3 -c "from langchain_community.embeddings import HuggingFaceEmbeddings; print('embeddings ok')"
-python3 -c "from langchain_community.document_loaders import TextLoader, DirectoryLoader; print('loaders ok')"
-python3 -c "from langchain_text_splitters import RecursiveCharacterTextSplitter; print('splitter ok')"
-python3 -c "from langchain.chains import RetrievalQA; print('chains ok')"
-python3 -c "from langchain.prompts import PromptTemplate; print('prompts ok')"
+
+python3 -c "import langchain_community; print(langchain_community.__version__)"
