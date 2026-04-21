@@ -1,1 +1,2 @@
-python3 -c "from rag import get_answer; print(get_answer('what is docker'))"
+<img width="959" height="531" alt="image" src="https://github.com/user-attachments/assets/94b51184-b19b-48b0-a475-84a467bacd4d" />
+
