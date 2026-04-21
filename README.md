@@ -1,8 +1,19 @@
-fastapi
-uvicorn
-langchain
-langchain-groq
-langchain-community
-chromadb
-sentence-transformers
-python-dotenv
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/docs:/app/docs
+      - ./backend/chroma_db:/app/chroma_db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
