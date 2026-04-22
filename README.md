@@ -1,14 +1,38 @@
-venv/
-__pycache__/
-*.pyc
-.env
-chroma_db/
-node_modules/
-build/
+name: InfraChat CI/CD
 
+on:
+  push:
+    branches:
+      - main
 
-git init
-git add .
-git commit -m "initial infrachat commit"
-git remote add origin https://github.com/shrutika1293/infrachat.git
-git push -u origin main
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/infrachat-backend:latest
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/infrachat-frontend:latest
+
+      - name: Deploy to Render
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
