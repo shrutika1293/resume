@@ -1,32 +1,21 @@
-FROM python:3.11-slim
+server {
+    listen 80;
 
-WORKDIR /app
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
 
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 8000
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    location /api/ {
+        proxy_pass http://backend:8000/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
 
 
-fastapi
-uvicorn
-langchain
-langchain-groq
-langchain-community
-langchain-chroma
-langchain-text-splitters
-langchain-core
-langchain-huggingface
-chromadb
-sentence-transformers
-python-dotenv
-
-FROM node:20-slim
+FROM node:20-slim AS build
 
 WORKDIR /app
 
@@ -36,41 +25,12 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "start"]
+FROM nginx:alpine
 
+COPY --from=build /app/build /usr/share/nginx/html
 
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-services:
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    env_file:
-      - ./backend/.env
-    volumes:
-      - ./backend/docs:/app/docs
-      - ./backend/chroma_db:/app/chroma_db
-    networks:
-      - infrachat-network
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000
-    networks:
-      - infrachat-network
-
-networks:
-  infrachat-network:
-    driver: bridge
-
-
-
-
-    const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/chat`, {
+EXPOSE 80
