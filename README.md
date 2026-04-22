@@ -1,1 +1,9 @@
-<img width="950" height="211" alt="image" src="https://github.com/user-attachments/assets/218e826d-9382-433c-8b59-8bed5dd2aee9" />
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson>
+  <disabledAdministrativeMonitors/>
+  <version>2.0</version>
+  <useSecurity>false</useSecurity>
+  <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
+  <securityRealm class="hudson.security.SecurityRealm$None"/>
+  <installStateName>RUNNING</installStateName>
+</hudson>
