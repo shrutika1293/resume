@@ -34,3 +34,34 @@ COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+
+
+const res = await fetch(`/api/chat`, {
+
+
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/docs:/app/docs
+      - ./backend/chroma_db:/app/chroma_db
+    networks:
+      - infrachat-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - infrachat-network
+
+networks:
+  infrachat-network:
+    driver: bridge
