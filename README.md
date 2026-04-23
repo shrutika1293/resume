@@ -1,14 +1,33 @@
-cp /home/shrutika/InfraChat/backend/main.py .
-cp /home/shrutika/InfraChat/backend/rag.py .
-cp /home/shrutika/InfraChat/backend/requirements.txt .
-mkdir -p docs
-cp /home/shrutika/InfraChat/backend/docs/*.txt docs/
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 7860
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class Message(BaseModel):
+    message: str
+
+@app.get("/")
+def root():
+    return {"status": "InfraChat is running"}
+
+@app.get("/health")
+def health():
+    return {"status": "InfraChat is running"}
+
+@app.post("/chat")
+async def chat(msg: Message):
+    from rag import get_answer
+    reply = get_answer(msg.message)
+    return {"reply": reply}
