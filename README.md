@@ -1,14 +1,14 @@
-# Step 1 - install ngrok
-curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
-echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
-sudo apt update && sudo apt install ngrok -y
+cp /home/shrutika/InfraChat/backend/main.py .
+cp /home/shrutika/InfraChat/backend/rag.py .
+cp /home/shrutika/InfraChat/backend/requirements.txt .
+mkdir -p docs
+cp /home/shrutika/InfraChat/backend/docs/*.txt docs/
 
-# Step 2 - sign up at ngrok.com and get your authtoken
-ngrok config add-authtoken your_token_here
 
-# Step 3 - start InfraChat
-cd /home/shrutika/InfraChat
-docker compose up -d
-
-# Step 4 - expose it publicly
-ngrok http 80
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 7860
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
