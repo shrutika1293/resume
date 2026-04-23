@@ -82,18 +82,4 @@ const styles = {
     marginTop: 160 },
   userMsg: { background: "#1a2f58", color: "#fff",
     padding: "10px 14px", borderRadius: 10,
-    marginBottom: 10, maxWidth: "80%",
-    marginLeft: "auto" },
-  botMsg: { background: "#fff", border: "1px solid #e2e8f0",
-    padding: "10px 14px", borderRadius: 10,
-    marginBottom: 10, maxWidth: "80%" },
-  inputRow: { display: "flex", gap: 10 },
-  input: { flex: 1, padding: "12px 16px",
-    borderRadius: 8, border: "1px solid #e2e8f0",
-    fontSize: 14, outline: "none" },
-  button: { padding: "12px 24px", background: "#1a2f58",
-    color: "#fff", border: "none", borderRadius: 8,
-    cursor: "pointer", fontSize: 14 },
-};
-
-export default App;
+    marginBottom: 1
