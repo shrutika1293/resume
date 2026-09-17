@@ -1,0 +1,20 @@
+2026-09-15 09:01:03 [INFO] [auth-service] User alice logged in from 192.168.1.10
+2026-09-15 09:01:47 [DEBUG] [cache-manager] Cache hit for key=user:1042
+2026-09-15 09:02:15 [WARN] [payment-gateway] High memory usage detected: 82%
+2026-09-15 09:03:02 [ERROR] [order-service] Payment declined for order ORD-10023, reason=insufficient_funds
+2026-09-15 09:03:40 [INFO] [user-api] Order ORD-10024 created successfully
+2026-09-15 09:04:12 [INFO] [auth-service] User bob logged in from 192.168.1.22
+2026-09-15 09:05:05 [DEBUG] [db-connector] Query executed in 320ms
+2026-09-15 09:05:59 [CRITICAL] [db-connector] Database connection pool exhausted
+2026-09-15 09:06:30 [WARN] [auth-service] Unusual login pattern detected for user carol from 192.168.1.31
+2026-09-15 09:07:11 [ERROR] [api-gateway] Request failed status=500 path=/api/v1/orders
+2026-09-15 09:07:58 [INFO] [notification-service] Email notification sent to bob@example.com
+2026-09-15 09:08:20 [INFO] [auth-service] User alice logged out
+2026-09-15 09:09:03 [ERROR] [auth-service] Authentication failed for user dave from 192.168.1.45
+2026-09-15 09:09:47 [DEBUG] [cache-manager] Cache miss for key=user:2087
+2026-09-15 09:10:12 [INFO] [order-service] Order ORD-10025 created successfully
+2026-09-15 09:10:55 [WARN] [inventory-service] Retrying connection to db-connector (attempt 3)
+2026-09-15 09:11:30 [INFO] [payment-gateway] Payment of $129.99 processed for order ORD-10024
+2026-09-15 09:12:04 [CRITICAL] [api-gateway] Service order-service is DOWN - all health checks failing
+2026-09-15 09:12:41 [INFO] [auth-service] User carol logged in from 192.168.1.31
+2026-09-15 09:13:19 [ERROR] [notification-service] Failed to send notification to dave@example.com
